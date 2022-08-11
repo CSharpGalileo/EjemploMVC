@@ -1,4 +1,6 @@
-﻿@{
+﻿@using AdventureWorksNS.Data
+@model HomeIndexViewModel
+@{
     ViewData["Title"] = "Home Page";
 }
 
@@ -7,3 +9,13 @@
     <p>Learn about <a href="https://docs.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
 </div>
 <p class="alert alert-primary">@DateTime.Now.ToLongTimeString()</p>
+
+@if (Model.Categorias is not null)
+{
+    <h2>Categorias</h2>
+    @foreach(ProductCategory prdCat in Model.Categorias)
+    {
+        <p>@prdCat.Name</p>
+    }
+}
+<h2>Visitas:@Model.ContadorVisitas</h2>
