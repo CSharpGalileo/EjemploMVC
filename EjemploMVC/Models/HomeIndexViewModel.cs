@@ -8,6 +8,6 @@ namespace EjemploMVC.Models
 
         public IList<ProductCategory>? Categorias { get; set; }
 
-        public IList<Product>? Products { get; set; }
+        public IList<Product>? Productos { get; set; }
     }
 }

@@ -11,7 +11,8 @@ namespace EjemploMVC.Controllers
         private readonly ILogger<HomeController> _logger;
         private readonly AdventureWorksDB db;
 
-        public HomeController(ILogger<HomeController> logger, AdventureWorksDB injectedContext)
+        public HomeController(ILogger<HomeController> logger, 
+                            AdventureWorksDB injectedContext)
         {
             _logger = logger;
             db = injectedContext;
@@ -25,7 +26,7 @@ namespace EjemploMVC.Controllers
             _logger.LogInformation("Esto solo es un mensaje");
             HomeIndexViewModel model = new();
             model.ContadorVisitas = (new Random()).Next(1, 1001);
-            model.Products = db.Products.ToList();
+            model.Productos = db.Products.ToList();
             model.Categorias = db.ProductCategories.ToList();
 
             return View(model);

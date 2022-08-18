@@ -2,6 +2,8 @@
 @model HomeIndexViewModel
 @{
     ViewData["Title"] = "Home Page";
+    string strActivo = "";
+    int contImagenes = 0;
 }
 
 <div class="text-center">
@@ -12,10 +14,59 @@
 
 @if (Model.Categorias is not null)
 {
-    <h2>Categorias</h2>
-    @foreach(ProductCategory prdCat in Model.Categorias)
-    {
-        <p>@prdCat.Name</p>
-    }
+    <div id="categories" class="carousel slide" data-ride="carousel"
+     data-interval="3000" data-keyboard="true">
+        <ol class="carousel-indicators">
+            @for (int c=0;c<Model.Categorias.Count;c++)
+            {
+                if (c == 0)
+                {
+                    strActivo = "active";
+                }
+                else
+                {
+                    strActivo = "";
+                }
+                <li data-target="#categories" data-slide-to="@c" class="@strActivo"></li>
+            }
+        </ol>
+        <div class="carousel-inner">
+            @for (int c=0;c<Model.Categorias.Count;c++)
+            {
+                if (c == 0)
+                {
+                    strActivo = "active";
+                }
+                else
+                {
+                    strActivo = "";
+                }
+                contImagenes++;
+                if (contImagenes>6)
+                {
+                    contImagenes = 1;
+                }
+                <div class="carousel-item @strActivo">
+                    <img class="d-block w-100" src="~/images/category@(contImagenes).jpeg"
+                        alt="@Model.Categorias[c].Name"/>
+                    <div class="carousel-caption d-none d-md-block">
+                        <h2>@Model.Categorias[c].Name</h2>
+                        <h3>id=@Model.Categorias[c].ProductCategoryId</h3>
+                    </div>
+                </div>     
+            }                   
+        </div>
+        <a class="carousel-control-prev" href="#categories"
+         role="button" data-slide="prev">
+          <span class="carousel-control-prev-icon"
+              aria-hidden="true"></span>
+          <span class="sr-only">Previous</span>
+        </a>
+        <a class="carousel-control-next" href="#categories"
+         role="button" data-slide="next">
+          <span class="carousel-control-next-icon" aria-hidden="true"></span>
+          <span class="sr-only">Next</span>
+        </a>
+    </div>
 }
 <h2>Visitas:@Model.ContadorVisitas</h2>
