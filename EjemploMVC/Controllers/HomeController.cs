@@ -44,5 +44,35 @@ namespace EjemploMVC.Controllers
         {
             return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
         }
+
+        public IActionResult DetalleProducto(int? id)
+        {
+            if (!id.HasValue)
+            {
+                return BadRequest("Se debe colocar un ID del producto en la ruta, por ejemplo /Home/DetalleProducto/12");
+            }
+            Product? model = db.Products.SingleOrDefault(p => p.ProductId == id);
+            if (model == null)
+            {
+                return NotFound($"El producto con el id {id} no se pudo encontrar");
+            }
+            return View(model);
+        }
+
+        public IActionResult ProductosConPrecioMayorA(decimal? precio)
+        {
+            if (!precio.HasValue)
+            {
+                return BadRequest("Se debe colocar un precio en la ruta, por ejemplo /home/ProductosConPrecioMayorA/500");
+            }
+            IEnumerable<Product> model = db.Products
+                    .Where(p => p.ListPrice >= precio);
+            if (!model.Any())
+            {
+                return NotFound($"No hay productos que cuesten mas que {precio:C}");
+            }
+            ViewData["PrecioMaximo"] = precio.Value.ToString("C");
+            return View(model);
+        }
     }
 }

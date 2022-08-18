@@ -17,7 +17,7 @@
     <div id="categories" class="carousel slide" data-ride="carousel"
      data-interval="3000" data-keyboard="true">
         <ol class="carousel-indicators">
-            @for (int c=0;c<Model.Categorias.Count;c++)
+            @for (int c = 0; c < Model.Categorias.Count; c++)
             {
                 if (c == 0)
                 {
@@ -31,7 +31,7 @@
             }
         </ol>
         <div class="carousel-inner">
-            @for (int c=0;c<Model.Categorias.Count;c++)
+            @for (int c = 0; c < Model.Categorias.Count; c++)
             {
                 if (c == 0)
                 {
@@ -42,31 +42,60 @@
                     strActivo = "";
                 }
                 contImagenes++;
-                if (contImagenes>6)
+                if (contImagenes > 6)
                 {
                     contImagenes = 1;
                 }
                 <div class="carousel-item @strActivo">
                     <img class="d-block w-100" src="~/images/category@(contImagenes).jpeg"
-                        alt="@Model.Categorias[c].Name"/>
+                 alt="@Model.Categorias[c].Name" />
                     <div class="carousel-caption d-none d-md-block">
                         <h2>@Model.Categorias[c].Name</h2>
                         <h3>id=@Model.Categorias[c].ProductCategoryId</h3>
                     </div>
-                </div>     
-            }                   
+                </div>
+            }
         </div>
         <a class="carousel-control-prev" href="#categories"
-         role="button" data-slide="prev">
-          <span class="carousel-control-prev-icon"
+       role="button" data-slide="prev">
+            <span class="carousel-control-prev-icon"
               aria-hidden="true"></span>
-          <span class="sr-only">Previous</span>
+            <span class="sr-only">Previous</span>
         </a>
         <a class="carousel-control-next" href="#categories"
-         role="button" data-slide="next">
-          <span class="carousel-control-next-icon" aria-hidden="true"></span>
-          <span class="sr-only">Next</span>
+       role="button" data-slide="next">
+            <span class="carousel-control-next-icon" aria-hidden="true"></span>
+            <span class="sr-only">Next</span>
         </a>
     </div>
 }
 <h2>Visitas:@Model.ContadorVisitas</h2>
+
+@if (Model.Productos is not null)
+{
+    <h2>Productos</h2>
+    <div id="product-columns">
+        <ul>
+            @foreach (Product p in Model.Productos)
+            {
+                <a asp-controller="Home" asp-action="DetalleProducto" asp-route-id="@p.ProductId">
+                    <li>@p.Name - $@p.ListPrice</li>
+                </a>
+            }
+        </ul>
+    </div>
+}
+
+@*<h3>Obtener un Producto</h3>
+<form method="post" action="/home/detalleproducto">
+    <input type="text" name="id" value="788"/>
+    <input type="submit"/>
+</form>*@
+
+
+<h3>Obtener productos por precio</h3>
+<form asp-action="ProductosConPrecioMayorA" method="GET">
+    <input name="precio" placeholder="Ingrese el precio" />
+    <input type="submit"/>
+</form>
+
